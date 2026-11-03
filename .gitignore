@@ -218,3 +218,7 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,python,jupyternotebooks
+
+# Database files
+data/*.sqlite
+data/*.db
