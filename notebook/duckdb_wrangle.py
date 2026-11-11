@@ -18,7 +18,7 @@ import duckdb
 import pandas as pd
 
 
-def wrangle_nepal_data(csv_path="./data", district_id=None):
+def wrangle_nepal_data(csv_path="../data", district_id=None):
     """
     Retrieve and prepare Nepal earthquake data for binary classification.
 
@@ -42,6 +42,7 @@ def wrangle_nepal_data(csv_path="./data", district_id=None):
     # Build file paths
     structure_path = f"{csv_path}/building_structure.csv"
     damage_path = f"{csv_path}/building_damage.csv"
+    id_map_path = f"{csv_path}/id_map.csv"
 
     # Build WHERE clause
     where_clause = "WHERE b.damage_grade IS NOT NULL"
@@ -61,7 +62,7 @@ def wrangle_nepal_data(csv_path="./data", district_id=None):
             b.damage_grade
         FROM read_csv_auto('{structure_path}') s
         JOIN read_csv_auto('{damage_path}') b ON s.building_id = b.building_id
-        JOIN read_csv_auto('./data/id_map.csv') i ON s.building_id = i.building_id
+        JOIN read_csv_auto('{id_map_path}') i ON s.building_id = i.building_id
         {where_clause}
     """
 
@@ -77,4 +78,4 @@ def wrangle_nepal_data(csv_path="./data", district_id=None):
                 .astype(int)
             )
         )
-        .drop(columns=["damage_grade"])
+        .drop(columns=["damage_grade"]))
